@@ -1,6 +1,7 @@
-import 'dart:math' as math;
-
 import 'package:flutter/material.dart';
+
+import 'Board.dart';
+import 'MyBombButton.dart';
 
 void main() {
   runApp(const MyApp());
@@ -31,8 +32,7 @@ class MyHomePage extends StatefulWidget {
 }
 
 class _MyHomePageState extends State<MyHomePage> {
-  final _isEnabled = List.generate(4, (_) => List.filled(4, true));
-  final _bombNum = math.Random().nextInt(16);
+  var board = Board();
 
   @override
   Widget build(BuildContext context) {
@@ -48,50 +48,12 @@ class _MyHomePageState extends State<MyHomePage> {
           child: Row(
             mainAxisAlignment: MainAxisAlignment.spaceEvenly,
             children: [
-              for (int i = 0; i < 4; i++) ...{
+              for (int column = 0; column < 4; column++) ...{
                 Column(
                   mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                   children: [
-                    for (int j = 0; j < 4; j++) ...{
-                      ElevatedButton(
-                        onPressed: !_isEnabled[i][j]
-                            ? null
-                            : () {
-                                if (_bombNum != i * 4 + j) {
-                                  ScaffoldMessenger.of(context)
-                                      .removeCurrentSnackBar();
-                                  ScaffoldMessenger.of(context)
-                                      .showSnackBar(const SnackBar(
-                                    content: Text('セーフ'),
-                                  ));
-                                } else {
-                                  showDialog<String>(
-                                    context: context,
-                                    barrierDismissible: false,
-                                    builder: (BuildContext context) =>
-                                        AlertDialog(
-                                      content: const Text('アウト'),
-                                      actions: <Widget>[
-                                        TextButton(
-                                          child: const Text('OK'),
-                                          onPressed: () =>
-                                              Navigator.pop(context, 'OK'),
-                                        ),
-                                      ],
-                                    ),
-                                  );
-                                }
-                                setState(() {
-                                  _isEnabled[i][j] = false;
-                                });
-                              },
-                        child: const Text('Btn'),
-                        style: ElevatedButton.styleFrom(
-                          fixedSize: const Size(70, 70),
-                          shape: const CircleBorder(),
-                          primary: Colors.red,
-                        ),
-                      ),
+                    for (int row = 0; row < 4; row++) ...{
+                      MyBombButton(button: board.getButton(column, row))
                     }
                   ],
                 ),
