@@ -1,44 +1,60 @@
-import 'package:flutter/material.dart';
+import 'dart:math' as math;
 
-import 'Board.dart';
+import 'package:flutter/material.dart';
+import 'package:get/get.dart';
+
 import 'MyBombButton.dart';
 
 void main() {
-  runApp(const MyApp());
+  runApp(const GetMaterialApp(home: GamePage()));
 }
 
-class MyApp extends StatelessWidget {
-  const MyApp({Key? key}) : super(key: key);
+class GameController extends GetxController {
+  static const title = '1/16';
+  static const boardSize = 4;
+  final List<RxList<bool>> isEnabledBoard =
+      List.generate(boardSize, (_) => List.filled(boardSize, true).obs);
+  var _bombRow = 0;
+  var _bombColumn = 0;
 
-  @override
-  Widget build(BuildContext context) {
-    return MaterialApp(
-      title: '1/16',
-      theme: ThemeData(
-        primarySwatch: Colors.blue,
-      ),
-      home: const MyHomePage(title: '1/16'),
-    );
+  GameController() {
+    newGame();
   }
+
+  //static GameController get to => Get.find();
+
+  bool isBombPos(int rowNum, int columnNum) =>
+      _bombRow == rowNum && _bombColumn == columnNum;
+
+  // bool isEnabled(int rowNum, int columnNum) =>
+  //     isEnabledBoard[rowNum][columnNum].value;
+
+  void newGame() {
+    for (int rowNum = 0; rowNum < boardSize; rowNum++) {
+      for (int columnNum = 0; columnNum < boardSize; columnNum++) {
+        isEnabledBoard[rowNum][columnNum] = true;
+      }
+    }
+
+    var bombNum = math.Random().nextInt(16);
+    _bombRow = bombNum ~/ boardSize;
+    _bombColumn = bombNum % boardSize;
+  }
+
+  void push(int rowNum, int columnNum) =>
+      isEnabledBoard[rowNum][columnNum] = false;
 }
 
-class MyHomePage extends StatefulWidget {
-  const MyHomePage({Key? key, required this.title}) : super(key: key);
-
-  final String title;
-
-  @override
-  State<MyHomePage> createState() => _MyHomePageState();
-}
-
-class _MyHomePageState extends State<MyHomePage> {
-  var board = Board();
+class GamePage extends StatelessWidget {
+  const GamePage({Key? key}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
+    final GameController gameController = Get.put(GameController());
+
     return Scaffold(
       appBar: AppBar(
-        title: Text(widget.title),
+        title: const Text(GameController.title),
       ),
       body: Center(
         child: Container(
@@ -48,12 +64,21 @@ class _MyHomePageState extends State<MyHomePage> {
           child: Row(
             mainAxisAlignment: MainAxisAlignment.spaceEvenly,
             children: [
-              for (int column = 0; column < 4; column++) ...{
+              for (int columnNum = 0;
+                  columnNum < GameController.boardSize;
+                  columnNum++) ...{
                 Column(
                   mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                   children: [
-                    for (int row = 0; row < 4; row++) ...{
-                      MyBombButton(button: board.getButton(column, row))
+                    for (int rowNum = 0;
+                        rowNum < GameController.boardSize;
+                        rowNum++) ...{
+                      Obx(() => MyBombButton(
+                            rowNum: rowNum,
+                            columnNum: columnNum,
+                            isEnabled: gameController.isEnabledBoard[rowNum]
+                                [columnNum],
+                          ))
                     }
                   ],
                 ),

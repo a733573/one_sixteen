@@ -1,29 +1,28 @@
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
+import 'package:one_sixteen/main.dart';
 
-import 'Board.dart';
+class MyBombButton extends StatelessWidget {
+  final int rowNum;
+  final int columnNum;
+  final bool isEnabled;
+  final GameController gameController = Get.find();
 
-class MyBombButton extends StatefulWidget {
-  final Button button;
+  MyBombButton({
+    Key? key,
+    required this.rowNum,
+    required this.columnNum,
+    required this.isEnabled,
+  }) : super(key: key);
 
-  const MyBombButton({Key? key, required this.button}) : super(key: key);
-
-  @override
-  State<MyBombButton> createState() => _MyBombButton();
-}
-
-class _MyBombButton extends State<MyBombButton> {
   @override
   Widget build(BuildContext context) {
     return ElevatedButton(
-      onPressed: !widget.button.isEnabled
+      onPressed: !isEnabled
           ? null
           : () {
-              if (!widget.button.isBomb) {
-                ScaffoldMessenger.of(context).removeCurrentSnackBar();
-                ScaffoldMessenger.of(context).showSnackBar(const SnackBar(
-                  content: Text('セーフ'),
-                ));
-              } else {
+              gameController.push(rowNum, columnNum);
+              if (gameController.isBombPos(rowNum, columnNum)) {
                 showDialog<String>(
                   context: context,
                   barrierDismissible: false,
@@ -31,16 +30,24 @@ class _MyBombButton extends State<MyBombButton> {
                     content: const Text('アウト'),
                     actions: <Widget>[
                       TextButton(
+                        onPressed: () => Get.back(),
                         child: const Text('OK'),
-                        onPressed: () => Navigator.pop(context, 'OK'),
                       ),
+                      TextButton(
+                          onPressed: () {
+                            gameController.newGame();
+                            Get.back();
+                          },
+                          child: const Text('New Game')),
                     ],
                   ),
                 );
+              } else {
+                ScaffoldMessenger.of(context).removeCurrentSnackBar();
+                ScaffoldMessenger.of(context).showSnackBar(const SnackBar(
+                  content: Text('セーフ'),
+                ));
               }
-              setState(() {
-                widget.button.push();
-              });
             },
       child: const Text('Btn'),
       style: ElevatedButton.styleFrom(
