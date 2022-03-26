@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:one_sixteen/main.dart';
+
+import '../../controller/GameController.dart';
 
 class MyBombButton extends StatelessWidget {
   final int rowNum;
