@@ -1,24 +1,24 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:one_sixteen/views/widgets/BombButton.dart';
 
-import '../controller/GameController.dart';
-import 'BombButton.dart';
+import '../controllers/GameController.dart';
 
-class GamePage extends StatelessWidget {
+class GameView extends StatelessWidget {
+  final GameController gameController = Get.put(GameController());
+
   // super・・・親クラスのコンストラクタを呼び出す。
-  GamePage({Key? key}) : super(key: key);
-  final GameController gameController = Get.find();
+  GameView({Key? key}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
-    // final・・・遅延初期定数
+    // final・・・遅延初期化定数
     // game_controller
     // gameController dartの場合使用する.定数と変数の宣言をするとき　(キャメルケース)
 
     return Scaffold(
       appBar: AppBar(
-        // 定数を使いたいときは、ControllerでStatic定義してGameControlle.～のように呼び出す
-        title: const Text(GameController.title),
+        title: const Text('Game'),
       ),
       body: Center(
         child: Container(
