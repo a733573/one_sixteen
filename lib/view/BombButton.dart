@@ -9,8 +9,10 @@ class MyBombButton extends StatelessWidget {
   final bool isEnabled;
   final GameController gameController = Get.find();
 
+  // {}で囲むとMAP型になる。MAP型を引数にすると名前付き引数になる。
   MyBombButton({
     Key? key,
+    // コンストラクタでもらった値を代入して初期化
     required this.rowNum,
     required this.columnNum,
     required this.isEnabled,
@@ -27,6 +29,7 @@ class MyBombButton extends StatelessWidget {
                 showDialog<String>(
                   context: context,
                   barrierDismissible: false,
+                  // builderはwidgetを指定する。 AlertDialogはシンプル
                   builder: (BuildContext context) => AlertDialog(
                     content: const Text('アウト'),
                     actions: <Widget>[
@@ -37,6 +40,7 @@ class MyBombButton extends StatelessWidget {
                       TextButton(
                           onPressed: () {
                             gameController.newGame();
+                            // 前の画面に戻る。
                             Get.back();
                           },
                           child: const Text('New Game')),

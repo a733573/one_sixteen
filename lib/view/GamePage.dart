@@ -5,14 +5,19 @@ import '../controller/GameController.dart';
 import 'BombButton.dart';
 
 class GamePage extends StatelessWidget {
-  const GamePage({Key? key}) : super(key: key);
+  // super・・・親クラスのコンストラクタを呼び出す。
+  GamePage({Key? key}) : super(key: key);
+  final GameController gameController = Get.find();
 
   @override
   Widget build(BuildContext context) {
-    final GameController gameController = Get.put(GameController());
+    // final・・・遅延初期定数
+    // game_controller
+    // gameController dartの場合使用する.定数と変数の宣言をするとき　(キャメルケース)
 
     return Scaffold(
       appBar: AppBar(
+        // 定数を使いたいときは、ControllerでStatic定義してGameControlle.～のように呼び出す
         title: const Text(GameController.title),
       ),
       body: Center(
