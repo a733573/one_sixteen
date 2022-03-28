@@ -37,7 +37,7 @@ class GameController extends GetxController {
       }
     }
 
-    final bombNum = math.Random().nextInt(16);
+    final bombNum = math.Random().nextInt(boardSize * boardSize);
     _bombRow = bombNum ~/ boardSize;
     _bombColumn = bombNum % boardSize;
   }

@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:one_sixteen/views/widgets/bomb_button.dart';
+import 'package:one_sixteen/widgets/bomb_button.dart';
 
 import '../controllers/game_controller.dart';
 
@@ -10,7 +10,7 @@ class GameView extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final gameController = Get.put(GameController());
+    Get.put(GameController());
     // final・・・遅延初期化定数
     // game_controller
     // gameController dartの場合使用する.定数と変数の宣言をするとき　(キャメルケース)
@@ -35,14 +35,10 @@ class GameView extends StatelessWidget {
                       for (int rowNum = 0;
                           rowNum < GameController.boardSize;
                           rowNum++) ...{
-                        Obx(
-                          () => BombButton(
-                            rowNum: rowNum,
-                            columnNum: columnNum,
-                            isEnabled:
-                                gameController.isEnabled(rowNum, columnNum),
-                          ),
-                        )
+                        BombButton(
+                          rowNum: rowNum,
+                          columnNum: columnNum,
+                        ),
                       }
                     ],
                   ),
