@@ -3,6 +3,7 @@ import 'package:get/get.dart';
 import 'package:one_sixteen/widgets/bomb_button.dart';
 
 import '../controllers/game_controller.dart';
+import '../models/board.dart';
 
 class GameView extends StatelessWidget {
   // super・・・親クラスのコンストラクタを呼び出す。
@@ -27,14 +28,12 @@ class GameView extends StatelessWidget {
               mainAxisAlignment: MainAxisAlignment.spaceEvenly,
               children: [
                 for (int columnNum = 0;
-                    columnNum < GameController.boardSize;
+                    columnNum < Board.size;
                     columnNum++) ...{
                   Column(
                     mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                     children: [
-                      for (int rowNum = 0;
-                          rowNum < GameController.boardSize;
-                          rowNum++) ...{
+                      for (int rowNum = 0; rowNum < Board.size; rowNum++) ...{
                         BombButton(
                           rowNum: rowNum,
                           columnNum: columnNum,

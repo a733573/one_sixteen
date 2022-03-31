@@ -2,6 +2,8 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:one_sixteen/controllers/game_controller.dart';
 
+import '../models/board.dart';
+
 class BombButton extends StatelessWidget {
   // {}で囲むとMAP型になる。MAP型を引数にすると名前付き引数になる。
   const BombButton({
@@ -17,16 +19,17 @@ class BombButton extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final GameController gameController = Get.find();
+    final board = gameController.board;
     final btnSize = context.mediaQueryShortestSide / 5.5;
 
     return Obx(
       () => ElevatedButton(
-        onPressed: !gameController.isEnabled(rowNum, columnNum)
+        onPressed: !board.isEnabled(rowNum, columnNum)
             ? null
             : () {
-                gameController.push(rowNum, columnNum);
-                if (gameController.isBombPos(rowNum, columnNum)) {
-                  openDialog(gameController);
+                board.push(rowNum, columnNum);
+                if (board.isBombPos(rowNum, columnNum)) {
+                  openDialog(board);
                 } else {
                   openSnackBar(context);
                 }
@@ -51,7 +54,7 @@ class BombButton extends StatelessWidget {
     );
   }
 
-  void openDialog(GameController gameController) {
+  void openDialog(Board board) {
     Get.defaultDialog(
       title: '',
       middleText: 'アウト',
@@ -63,7 +66,7 @@ class BombButton extends StatelessWidget {
         ),
         TextButton(
           onPressed: () {
-            gameController.newGame();
+            board.newGame();
             // 前の画面に戻る。
             Get.back();
           },
