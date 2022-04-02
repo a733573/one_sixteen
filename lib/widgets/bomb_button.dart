@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:one_sixteen/controllers/game_controller.dart';
 
+import '../controllers/game_controller.dart';
 import '../models/board.dart';
 
 class BombButton extends StatelessWidget {

@@ -1,9 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:one_sixteen/widgets/bomb_button.dart';
 
 import '../controllers/game_controller.dart';
 import '../models/board.dart';
+import '../views/settings_view.dart';
+import '../widgets/bomb_button.dart';
 
 class GameView extends StatelessWidget {
   // super・・・親クラスのコンストラクタを呼び出す。
@@ -11,13 +12,23 @@ class GameView extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    Get.put(GameController());
-    // final・・・遅延初期化定数
+    final GameController gameController = Get.find();
+    // final・・・遅延t期化定数
     // game_controller
     // gameController dartの場合使用する.定数と変数の宣言をするとき　(キャメルケース)
     return Scaffold(
       appBar: AppBar(
         title: const Text('Game'),
+        actions: [
+          IconButton(
+            onPressed: () => {gameController.board.newGame()},
+            icon: const Icon(Icons.fiber_new),
+          ),
+          IconButton(
+            onPressed: () => Get.to(() => const SettingsView()),
+            icon: const Icon(Icons.settings),
+          ),
+        ],
       ),
       body: Center(
         child: AspectRatio(
