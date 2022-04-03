@@ -1,16 +1,18 @@
 import 'dart:math' as math;
+import 'package:get/get.dart';
 
-import 'package:get/get_rx/src/rx_types/rx_types.dart';
+import '../controllers/settings_controller.dart';
 
 class Board {
   Board() {
     newGame();
   }
 
-  static const size = 4;
+  //final SettingsController settingsController = Get.find();
+
   final List<List<RxBool>> _isEnabledBoard = List.generate(
-    size,
-    (_) => List.generate(size, (_) => true.obs),
+    SettingsController.to.boardSize,
+    (_) => List.generate(SettingsController.to.boardSize, (_) => true.obs),
   );
   var _bombRow = 0;
   var _bombColumn = 0;
@@ -22,15 +24,19 @@ class Board {
       _bombRow == rowNum && _bombColumn == columnNum;
 
   void newGame() {
-    for (var rowNum = 0; rowNum < size; rowNum++) {
-      for (var columnNum = 0; columnNum < size; columnNum++) {
+    for (var rowNum = 0; rowNum < SettingsController.to.boardSize; rowNum++) {
+      for (var columnNum = 0;
+          columnNum < SettingsController.to.boardSize;
+          columnNum++) {
         _isEnabledBoard[rowNum][columnNum].value = true;
       }
     }
 
-    final bombNum = math.Random().nextInt(size * size);
-    _bombRow = bombNum ~/ size;
-    _bombColumn = bombNum % size;
+    final bombNum = math.Random().nextInt(
+      SettingsController.to.boardSize * SettingsController.to.boardSize,
+    );
+    _bombRow = bombNum ~/ SettingsController.to.boardSize;
+    _bombColumn = bombNum % SettingsController.to.boardSize;
   }
 
   void push(int rowNum, int columnNum) =>

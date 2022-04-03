@@ -9,7 +9,12 @@ dependencies:
   flutter:
     sdk: flutter
   flutter_colorpicker: ^1.0.3
+  flutter_launcher_icons:
+    git:
+      url: https://github.com/Davenchy/flutter_launcher_icons.git
+      ref: fixMinSdkParseFlutter2.8
   get:
+
   #get_cli: ^1.7.1
 
 dev_dependencies:
@@ -19,3 +24,11 @@ dev_dependencies:
 
 flutter:
   uses-material-design: true
+  assets:
+    - assets/
+
+flutter_icons:
+  android: true
+  ios: true
+  image_path: "assets/icon.png"
+

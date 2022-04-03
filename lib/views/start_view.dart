@@ -19,12 +19,29 @@ class StartView extends StatelessWidget {
           ),
         ],
       ),
-      body: Center(
-        child: TextButton(
-          onPressed: () => Get.to(() => const GameView()),
-          child: const Text(
-            'Game Start',
-            style: TextStyle(fontSize: 50),
+      body: DecoratedBox(
+        decoration: const BoxDecoration(
+          image: DecorationImage(
+            image: AssetImage('assets/bomb_game.png'),
+            fit: BoxFit.cover,
+          ),
+        ),
+        child: Center(
+          child: Container(
+            margin: EdgeInsets.only(top: Get.height / 2.5),
+            child: ElevatedButton(
+              onPressed: () => Get.to(() => const GameView()),
+              style: ElevatedButton.styleFrom(
+                primary: Colors.yellow, //ボタンの背景色
+              ),
+              child: const Text(
+                'Game Start',
+                style: TextStyle(
+                  fontSize: 50,
+                  color: Colors.black,
+                ),
+              ),
+            ),
           ),
         ),
       ),

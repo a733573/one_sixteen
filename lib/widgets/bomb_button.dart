@@ -22,7 +22,8 @@ class BombButton extends StatelessWidget {
     final GameController gameController = Get.find();
     final SettingsController settingsController = Get.find();
     final board = gameController.board;
-    final btnSize = context.mediaQueryShortestSide / 5.5;
+    final btnSize =
+        context.mediaQueryShortestSide * 0.75 / SettingsController.to.boardSize;
 
     return Obx(
       () => ElevatedButton(

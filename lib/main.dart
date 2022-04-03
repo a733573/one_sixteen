@@ -15,7 +15,7 @@ class MyApp extends StatelessWidget {
       title: '1/16',
       initialBinding: InitialBinding(),
       theme: ThemeData(
-        primarySwatch: Colors.blue,
+        primarySwatch: Colors.yellow,
       ),
       home: const StartView(),
     );

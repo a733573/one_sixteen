@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
 import '../controllers/game_controller.dart';
-import '../models/board.dart';
+import '../controllers/settings_controller.dart';
 import '../views/settings_view.dart';
 import '../widgets/bomb_button.dart';
 
@@ -13,6 +13,7 @@ class GameView extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final GameController gameController = Get.find();
+    final SettingsController settingsController = Get.find();
     // final・・・遅延t期化定数
     // game_controller
     // gameController dartの場合使用する.定数と変数の宣言をするとき　(キャメルケース)
@@ -30,30 +31,42 @@ class GameView extends StatelessWidget {
           ),
         ],
       ),
-      body: Center(
-        child: AspectRatio(
-          aspectRatio: 1,
-          child: Container(
-            color: Colors.grey,
-            child: Row(
-              mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-              children: [
-                for (int columnNum = 0;
-                    columnNum < Board.size;
-                    columnNum++) ...{
-                  Column(
-                    mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                    children: [
-                      for (int rowNum = 0; rowNum < Board.size; rowNum++) ...{
-                        BombButton(
-                          rowNum: rowNum,
-                          columnNum: columnNum,
-                        ),
-                      }
-                    ],
-                  ),
-                }
-              ],
+      body: DecoratedBox(
+        decoration: const BoxDecoration(
+          image: DecorationImage(
+            image: AssetImage('assets/texture.png'),
+            fit: BoxFit.cover,
+          ),
+        ),
+        child: Center(
+          child: AspectRatio(
+            aspectRatio: 1,
+            child: Obx(
+              () => Container(
+                color: settingsController.boardColor,
+                child: Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                  children: [
+                    for (int columnNum = 0;
+                        columnNum < SettingsController.to.boardSize;
+                        columnNum++) ...{
+                      Column(
+                        mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                        children: [
+                          for (int rowNum = 0;
+                              rowNum < SettingsController.to.boardSize;
+                              rowNum++) ...{
+                            BombButton(
+                              rowNum: rowNum,
+                              columnNum: columnNum,
+                            ),
+                          }
+                        ],
+                      ),
+                    }
+                  ],
+                ),
+              ),
             ),
           ),
         ),
