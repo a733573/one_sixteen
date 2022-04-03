@@ -16,12 +16,38 @@ class SettingsView extends StatelessWidget {
       ),
       body: ListView(
         children: [
-          TextButton(
-            onPressed: () {
-              settingsController.buttonColor = Colors.blue;
-            },
-            child: const Text('Change Button Color'),
-          )
+          Row(
+            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+            children: <Widget>[
+              const Text('Button Color'),
+              Obx(() {
+                return DropdownButton(
+                  items: [
+                    DropdownMenuItem(
+                      value: Colors.red.value,
+                      child: const Text('Red'),
+                    ),
+                    DropdownMenuItem(
+                      value: Colors.blue.value,
+                      child: const Text('Blue'),
+                    ),
+                    DropdownMenuItem(
+                      value: Colors.green.value,
+                      child: const Text('Green'),
+                    ),
+                    DropdownMenuItem(
+                      value: Colors.yellow.value,
+                      child: const Text('Yellow'),
+                    ),
+                  ],
+                  onChanged: (int? value) {
+                    settingsController.buttonColorValue = value!;
+                  },
+                  value: settingsController.buttonColorValue,
+                );
+              })
+            ],
+          ),
         ],
       ),
     );

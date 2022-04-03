@@ -2,9 +2,13 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
 class SettingsController extends GetxController {
-  final RxInt _buttonColor = Colors.red.value.obs;
+  final RxInt _buttonColorValue = Colors.red.value.obs;
 
-  Color get buttonColor => Color(_buttonColor.value);
+  int get buttonColorValue => _buttonColorValue.value;
 
-  set buttonColor(Color color) => _buttonColor.value = color.value;
+  set buttonColorValue(int value) => _buttonColorValue.value = value;
+
+  Color get buttonColor => Color(_buttonColorValue.value);
+
+  set buttonColor(Color color) => _buttonColorValue.value = color.value;
 }
