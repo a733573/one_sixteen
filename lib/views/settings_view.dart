@@ -8,11 +8,21 @@ class SettingsView extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    SettingsController settingsController = Get.find();
+    final SettingsController settingsController = Get.find();
 
     return Scaffold(
       appBar: AppBar(
         title: const Text('Settings'),
+      ),
+      body: ListView(
+        children: [
+          TextButton(
+            onPressed: () {
+              settingsController.buttonColor = Colors.blue;
+            },
+            child: const Text('Change Button Color'),
+          )
+        ],
       ),
     );
   }

@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:one_sixteen/controllers/settings_controller.dart';
 
 import '../controllers/game_controller.dart';
 import '../models/board.dart';
@@ -19,6 +20,7 @@ class BombButton extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final GameController gameController = Get.find();
+    final SettingsController settingsController = Get.find();
     final board = gameController.board;
     final btnSize = context.mediaQueryShortestSide / 5.5;
 
@@ -37,7 +39,7 @@ class BombButton extends StatelessWidget {
         style: ElevatedButton.styleFrom(
           fixedSize: Size(btnSize, btnSize),
           shape: const CircleBorder(),
-          primary: Colors.red,
+          primary: settingsController.buttonColor,
         ),
         child: const Text('Btn'),
       ),
