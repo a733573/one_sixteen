@@ -1,9 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:one_sixteen/controllers/settings_controller.dart';
 
 import '../controllers/game_controller.dart';
-import '../models/board.dart';
+import '../controllers/settings_controller.dart';
 
 class BombButton extends StatelessWidget {
   // {}で囲むとMAP型になる。MAP型を引数にすると名前付き引数になる。
@@ -19,37 +18,33 @@ class BombButton extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final GameController gameController = Get.find();
-    final SettingsController settingsController = Get.find();
-    final board = gameController.board;
-    final btnSize =
-        context.mediaQueryShortestSide * 0.75 / SettingsController.to.boardSize;
+    final btnSize = context.width * 0.75 / SettingsController.to.boardSize;
 
     return Obx(
       () => ElevatedButton(
-        onPressed: !board.isEnabled(rowNum, columnNum)
+        onPressed: !GameController.to.board.isEnabled(rowNum, columnNum)
             ? null
             : () {
-                board.push(rowNum, columnNum);
-                if (board.isBombPos(rowNum, columnNum)) {
-                  openDialog(board);
+                GameController.to.board.push(rowNum, columnNum);
+                if (GameController.to.board.isBombPos(rowNum, columnNum)) {
+                  openDialog();
                 } else {
-                  openSnackBar(context);
+                  openSnackBar();
                 }
               },
         style: ElevatedButton.styleFrom(
           fixedSize: Size(btnSize, btnSize),
           shape: const CircleBorder(),
-          primary: settingsController.buttonColor,
+          primary: SettingsController.to.buttonColor,
         ),
-        child: const Text('Btn'),
+        child: const Text(''),
       ),
     );
   }
 
-  void openSnackBar(BuildContext context) {
-    ScaffoldMessenger.of(context).removeCurrentSnackBar();
-    ScaffoldMessenger.of(context).showSnackBar(
+  void openSnackBar() {
+    ScaffoldMessenger.of(Get.context!).removeCurrentSnackBar();
+    ScaffoldMessenger.of(Get.context!).showSnackBar(
       const SnackBar(
         content: Text('セーフ'),
         duration: Duration(seconds: 1),
@@ -57,23 +52,28 @@ class BombButton extends StatelessWidget {
     );
   }
 
-  void openDialog(Board board) {
+  void openDialog() {
     Get.defaultDialog(
       title: '',
       middleText: 'アウト',
       barrierDismissible: false,
       actions: <Widget>[
         TextButton(
-          onPressed: () => Get.back(),
-          child: const Text('OK'),
-        ),
-        TextButton(
           onPressed: () {
-            board.newGame();
-            // 前の画面に戻る。
+            GameController.to.boardInit();
             Get.back();
           },
-          child: const Text('New Game'),
+          child: const Text(
+            '新規ゲーム',
+            style: TextStyle(color: Colors.black),
+          ),
+        ),
+        TextButton(
+          onPressed: () => Get.back(),
+          child: const Text(
+            '戻る',
+            style: TextStyle(color: Colors.black),
+          ),
         ),
       ],
     );

@@ -12,17 +12,12 @@ class GameView extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final GameController gameController = Get.find();
-    final SettingsController settingsController = Get.find();
-    // final・・・遅延t期化定数
-    // game_controller
-    // gameController dartの場合使用する.定数と変数の宣言をするとき　(キャメルケース)
     return Scaffold(
       appBar: AppBar(
         title: const Text('Game'),
         actions: [
           IconButton(
-            onPressed: () => {gameController.board.newGame()},
+            onPressed: () => openDialog(),
             icon: const Icon(Icons.fiber_new),
           ),
           IconButton(
@@ -34,7 +29,7 @@ class GameView extends StatelessWidget {
       body: DecoratedBox(
         decoration: const BoxDecoration(
           image: DecorationImage(
-            image: AssetImage('assets/texture.png'),
+            image: AssetImage('assets/images/texture.png'),
             fit: BoxFit.cover,
           ),
         ),
@@ -43,7 +38,7 @@ class GameView extends StatelessWidget {
             aspectRatio: 1,
             child: Obx(
               () => Container(
-                color: settingsController.boardColor,
+                color: SettingsController.to.boardColor,
                 child: Row(
                   mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                   children: [
@@ -71,6 +66,33 @@ class GameView extends StatelessWidget {
           ),
         ),
       ),
+    );
+  }
+
+  void openDialog() {
+    Get.defaultDialog(
+      title: '',
+      middleText: '新しくゲームを始めますか？',
+      barrierDismissible: false,
+      actions: <Widget>[
+        TextButton(
+          onPressed: () {
+            GameController.to.boardInit();
+            Get.back();
+          },
+          child: const Text(
+            'はい',
+            style: TextStyle(color: Colors.black),
+          ),
+        ),
+        TextButton(
+          onPressed: () => Get.back(),
+          child: const Text(
+            'いいえ',
+            style: TextStyle(color: Colors.black),
+          ),
+        ),
+      ],
     );
   }
 }

@@ -9,8 +9,6 @@ class SettingsView extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final SettingsController settingsController = Get.find();
-
     return Scaffold(
       appBar: AppBar(
         title: const Text('Settings'),
@@ -46,9 +44,9 @@ class SettingsView extends StatelessWidget {
                           ),
                         ],
                         onChanged: (int? value) {
-                          settingsController.buttonColorValue = value!;
+                          SettingsController.to.buttonColorValue = value!;
                         },
-                        value: settingsController.buttonColorValue,
+                        value: SettingsController.to.buttonColorValue,
                       );
                     })
                   ],
@@ -78,9 +76,9 @@ class SettingsView extends StatelessWidget {
                           ),
                         ],
                         onChanged: (int? value) {
-                          settingsController.boardColorValue = value!;
+                          SettingsController.to.boardColorValue = value!;
                         },
-                        value: settingsController.boardColorValue,
+                        value: SettingsController.to.boardColorValue,
                       );
                     })
                   ],
@@ -106,10 +104,11 @@ class SettingsView extends StatelessWidget {
                           ),
                         ],
                         onChanged: (int? value) {
-                          settingsController.boardSize = value!;
-                          GameController.to.boardInit();
+                          if (SettingsController.to.boardSize != value) {
+                            openDialog(value!);
+                          }
                         },
-                        value: settingsController.boardSize,
+                        value: SettingsController.to.boardSize,
                       );
                     })
                   ],
@@ -125,6 +124,34 @@ class SettingsView extends StatelessWidget {
           )
         ],
       ),
+    );
+  }
+
+  void openDialog(int value) {
+    Get.defaultDialog(
+      title: '',
+      middleText: 'ボードサイズを変更するとゲームがリセットされますが、よろしいですか？',
+      barrierDismissible: false,
+      actions: <Widget>[
+        TextButton(
+          onPressed: () {
+            SettingsController.to.boardSize = value;
+            GameController.to.boardInit();
+            Get.back();
+          },
+          child: const Text(
+            'はい',
+            style: TextStyle(color: Colors.black),
+          ),
+        ),
+        TextButton(
+          onPressed: () => Get.back(),
+          child: const Text(
+            'キャンセル',
+            style: TextStyle(color: Colors.black),
+          ),
+        ),
+      ],
     );
   }
 }
