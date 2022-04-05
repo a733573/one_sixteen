@@ -24,7 +24,7 @@ class StartView extends StatelessWidget {
         alignment: const Alignment(0, 0.6),
         decoration: const BoxDecoration(
           image: DecorationImage(
-            image: AssetImage('assets/images/bomb_game.png'),
+            image: AssetImage('assets/images/title.png'),
             fit: BoxFit.cover,
           ),
         ),

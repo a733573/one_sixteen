@@ -29,7 +29,7 @@ class GameView extends StatelessWidget {
       body: DecoratedBox(
         decoration: const BoxDecoration(
           image: DecorationImage(
-            image: AssetImage('assets/images/texture.png'),
+            image: AssetImage('assets/images/back_ground.png'),
             fit: BoxFit.cover,
           ),
         ),

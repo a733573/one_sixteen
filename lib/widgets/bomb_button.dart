@@ -21,29 +21,49 @@ class BombButton extends StatelessWidget {
     final btnSize = context.width * 0.75 / SettingsController.to.boardSize;
 
     return Obx(
-      () => ElevatedButton(
-        onPressed: !GameController.to.board.isEnabled(rowNum, columnNum)
-            ? null
-            : () {
-                GameController.to.board.push(rowNum, columnNum);
-                if (GameController.to.board.isBombPos(rowNum, columnNum)) {
-                  openDialog();
-                } else {
-                  openSnackBar();
-                }
-              },
-        style: ElevatedButton.styleFrom(
-          fixedSize: Size(btnSize, btnSize),
-          shape: const CircleBorder(),
-          primary: SettingsController.to.buttonColor,
-        ),
-        child: const Text(''),
-      ),
+      () => (GameController.to.board.isGameOver ||
+                  GameController.to.board.isGameClear) &&
+              GameController.to.board.isBombPos(rowNum, columnNum)
+          ? Container(
+              width: btnSize,
+              height: btnSize,
+              decoration: BoxDecoration(
+                image: DecorationImage(
+                  image: GameController.to.board.isGameOver
+                      ? const AssetImage('assets/images/explosion.png')
+                      : const AssetImage('assets/images/bomb.png'),
+                  fit: BoxFit.cover,
+                ),
+              ),
+            )
+          : ElevatedButton(
+              onPressed: !GameController.to.board.isEnabled(rowNum, columnNum)
+                  ? null
+                  : () {
+                      if (GameController.to.board.isGameOver ||
+                          GameController.to.board.isGameClear) {
+                        return;
+                      }
+                      GameController.to.board.push(rowNum, columnNum);
+                      // ScaffoldMessenger.of(Get.context!).removeCurrentSnackBar();
+                      // if (GameController.to.board
+                      //     .isBombPos(rowNum, columnNum)) {
+                      //   openDialog();
+                      // } else {
+                      //   openSnackBar();
+                      // }
+                    },
+              style: ElevatedButton.styleFrom(
+                fixedSize: Size(btnSize, btnSize),
+                shape: const CircleBorder(),
+                primary: SettingsController.to.buttonColor,
+              ),
+              child: const Text(''),
+            ),
     );
   }
 
   void openSnackBar() {
-    ScaffoldMessenger.of(Get.context!).removeCurrentSnackBar();
     ScaffoldMessenger.of(Get.context!).showSnackBar(
       const SnackBar(
         content: Text('セーフ'),

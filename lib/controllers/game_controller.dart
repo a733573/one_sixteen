@@ -5,12 +5,17 @@ import '../models/board.dart';
 
 class GameController extends GetxController {
   final _board = Board().obs;
-  final AudioCache _player = AudioCache();
+  final AudioCache _player = AudioCache(prefix: 'assets/sounds/');
 
   @override
   void onInit() {
     super.onInit();
-    _player.loadAll(['sounds/push_button.mp3', 'sounds/board_init.mp3']);
+    _player.loadAll([
+      'push_button.mp3',
+      'board_init.mp3',
+      'explosion.mp3',
+      'clear.mp3',
+    ]);
   }
 
   static GameController get to => Get.find();
@@ -18,9 +23,13 @@ class GameController extends GetxController {
   Board get board => _board.value;
 
   void boardInit() {
-    _player.play('sounds/board_init.mp3');
+    _player.play('board_init.mp3');
     _board.value = Board();
   }
 
-  void playButtonSound() => _player.play('sounds/push_button.mp3');
+  void playButtonSound() => _player.play('push_button.mp3');
+
+  void playExplosionSound() => _player.play('explosion.mp3');
+
+  void playClearSound() => _player.play('clear.mp3');
 }

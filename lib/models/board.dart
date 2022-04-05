@@ -12,6 +12,7 @@ class Board {
     );
     _bombRow = bombNum ~/ SettingsController.to.boardSize;
     _bombColumn = bombNum % SettingsController.to.boardSize;
+    print(bombNum);
   }
 
   final List<List<RxBool>> _isEnabledBoard = List.generate(
@@ -20,6 +21,15 @@ class Board {
   );
   late final int _bombRow;
   late final int _bombColumn;
+  var _remainingButtons =
+      SettingsController.to.boardSize * SettingsController.to.boardSize;
+
+  var _isGameOver = false;
+  var _isGameClear = false;
+
+  bool get isGameOver => _isGameOver;
+
+  bool get isGameClear => _isGameClear;
 
   bool isEnabled(int rowNum, int columnNum) =>
       _isEnabledBoard[rowNum][columnNum].value;
@@ -28,7 +38,22 @@ class Board {
       _bombRow == rowNum && _bombColumn == columnNum;
 
   void push(int rowNum, int columnNum) {
-    GameController.to.playButtonSound();
+    if (_isGameOver || _isGameClear) {
+      return;
+    }
+
     _isEnabledBoard[rowNum][columnNum].value = false;
+    _remainingButtons--;
+
+    if (isBombPos(rowNum, columnNum)) {
+      GameController.to.playExplosionSound();
+      _isGameOver = true;
+    } else if (_remainingButtons == 1) {
+      GameController.to.playClearSound();
+      _isEnabledBoard[_bombRow][_bombColumn].value = false;
+      _isGameClear = true;
+    } else {
+      GameController.to.playButtonSound();
+    }
   }
 }
