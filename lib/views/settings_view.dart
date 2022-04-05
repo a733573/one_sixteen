@@ -11,32 +11,32 @@ class SettingsView extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: const Text('Settings'),
+        title: const Text('設定'),
       ),
       body: ListView(
         children: [
           Row(
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: <Widget>[
-              const Text('Button Color'),
+              const Text('ボタンの色'),
               Obx(() {
                 return DropdownButton(
                   items: [
                     DropdownMenuItem(
                       value: Colors.red.value,
-                      child: const Text('Red'),
+                      child: const Text('赤'),
                     ),
                     DropdownMenuItem(
                       value: Colors.blue.value,
-                      child: const Text('Blue'),
+                      child: const Text('青'),
                     ),
                     DropdownMenuItem(
                       value: Colors.green.value,
-                      child: const Text('Green'),
+                      child: const Text('緑'),
                     ),
                     DropdownMenuItem(
                       value: Colors.yellow.value,
-                      child: const Text('Yellow'),
+                      child: const Text('黄'),
                     ),
                   ],
                   onChanged: (int? value) {
@@ -50,25 +50,25 @@ class SettingsView extends StatelessWidget {
           Row(
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: <Widget>[
-              const Text('Board Color'),
+              const Text('ボードの色'),
               Obx(() {
                 return DropdownButton(
                   items: [
                     DropdownMenuItem(
                       value: Colors.grey.value,
-                      child: const Text('Grey'),
+                      child: const Text('グレー'),
                     ),
                     DropdownMenuItem(
                       value: Colors.purple.value,
-                      child: const Text('Purple'),
+                      child: const Text('紫'),
                     ),
                     DropdownMenuItem(
                       value: Colors.black.value,
-                      child: const Text('Black'),
+                      child: const Text('黒'),
                     ),
                     DropdownMenuItem(
                       value: Colors.pink.value,
-                      child: const Text('Pink'),
+                      child: const Text('ピンク'),
                     ),
                   ],
                   onChanged: (int? value) {
@@ -82,7 +82,7 @@ class SettingsView extends StatelessWidget {
           Row(
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: <Widget>[
-              const Text('Board Size'),
+              const Text('ボードサイズ'),
               Obx(() {
                 return DropdownButton(
                   items: const [
@@ -101,9 +101,9 @@ class SettingsView extends StatelessWidget {
                   ],
                   onChanged: (int? value) {
                     if (SettingsController.to.boardSize != value) {
-                      SettingsController.to.boardSize = value!;
-                      GameController.to.boardInit();
-                      // openDialog(value!);
+                      // SettingsController.to.boardSize = value!;
+                      // GameController.to.boardInit();
+                      openDialog(value!);
                     }
                   },
                   value: SettingsController.to.boardSize,
@@ -119,8 +119,8 @@ class SettingsView extends StatelessWidget {
   void openDialog(int value) {
     Get.defaultDialog(
       title: '',
-      middleText: 'ボードサイズを変更するとゲームがリセットされますが、よろしいですか？',
-      barrierDismissible: false,
+      middleText: 'ボードサイズを変更すると\nゲームがリセットされますが\nよろしいですか？',
+      // barrierDismissible: false,
       actions: <Widget>[
         TextButton(
           onPressed: () {

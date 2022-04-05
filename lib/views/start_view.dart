@@ -12,7 +12,7 @@ class StartView extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: const Text('Start'),
+        title: const Text('スタート'),
         actions: [
           IconButton(
             onPressed: () => Get.to(() => const SettingsView()),

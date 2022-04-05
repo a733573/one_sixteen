@@ -14,7 +14,7 @@ class GameView extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: const Text('Game'),
+        title: const Text('ゲーム'),
         actions: [
           IconButton(
             onPressed: () => openDialog(),
@@ -79,7 +79,7 @@ class GameView extends StatelessWidget {
     Get.defaultDialog(
       title: '',
       middleText: '新しくゲームを始めますか？',
-      barrierDismissible: false,
+      // barrierDismissible: false,
       actions: <Widget>[
         TextButton(
           onPressed: () {
@@ -94,7 +94,7 @@ class GameView extends StatelessWidget {
         TextButton(
           onPressed: () => Get.back(),
           child: const Text(
-            'いいえ',
+            'キャンセル',
             style: TextStyle(color: Colors.black),
           ),
         ),
