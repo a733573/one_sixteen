@@ -33,38 +33,41 @@ class GameView extends StatelessWidget {
             : null,
         child: DecoratedBox(
           decoration: const BoxDecoration(
-            image: DecorationImage(
-              image: AssetImage('assets/images/back_ground.png'),
-              fit: BoxFit.cover,
-            ),
+            color: Colors.black54,
           ),
           child: Center(
             child: AspectRatio(
               aspectRatio: 1,
               child: Obx(
-                () => Container(
-                  color: SettingsController.to.boardColor,
-                  child: Row(
-                    mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                    children: [
-                      for (int columnNum = 0;
-                          columnNum < SettingsController.to.boardSize;
-                          columnNum++) ...{
-                        Column(
-                          mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                          children: [
-                            for (int rowNum = 0;
-                                rowNum < SettingsController.to.boardSize;
-                                rowNum++) ...{
-                              BombButton(
-                                rowNum: rowNum,
-                                columnNum: columnNum,
-                              ),
-                            }
-                          ],
-                        ),
-                      }
-                    ],
+                () => DecoratedBox(
+                  decoration: BoxDecoration(
+                    color: SettingsController.to.boardColor,
+                    border: Border.all(color: Colors.yellow, width: 10),
+                  ),
+                  child: Padding(
+                    padding: const EdgeInsets.all(10),
+                    child: Row(
+                      mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                      children: [
+                        for (int columnNum = 0;
+                            columnNum < SettingsController.to.boardSize;
+                            columnNum++) ...{
+                          Column(
+                            mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                            children: [
+                              for (int rowNum = 0;
+                                  rowNum < SettingsController.to.boardSize;
+                                  rowNum++) ...{
+                                BombButton(
+                                  rowNum: rowNum,
+                                  columnNum: columnNum,
+                                ),
+                              }
+                            ],
+                          ),
+                        }
+                      ],
+                    ),
                   ),
                 ),
               ),

@@ -1,34 +1,34 @@
 name: one_sixteen
-description: A new Flutter project.
 version: 1.0.0+1
+description: A new Flutter project.
+environment: 
+  sdk: '>=2.16.1 <3.0.0'
 
-environment:
-  sdk: ">=2.16.1 <3.0.0"
-
-dependencies:
+dependencies: 
   audioplayers: ^0.20.1
-  flutter:
+  get: any
+  pushable_button: 0.0.3
+  flutter: 
     sdk: flutter
-  get:
 
-dev_dependencies:
-  flutter_launcher_icons:
-    git:
+dev_dependencies: 
+  pedantic_mono: any
+  flutter_launcher_icons: 
+    git: 
       url: https://github.com/Davenchy/flutter_launcher_icons.git
       ref: fixMinSdkParseFlutter2.8
-  flutter_test:
+  flutter_test: 
     sdk: flutter
-  pedantic_mono: any
 
-flutter:
-  uses-material-design: true
-  assets:
+flutter: 
+  assets: 
     - assets/icon/
     - assets/images/
     - assets/sounds/
+  uses-material-design: true
 
-flutter_icons:
+flutter_icons: 
+  image_path: assets/icon/icon.png
   android: true
   ios: true
-  image_path: "assets/icon/icon.png"
 

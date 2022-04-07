@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:pushable_button/pushable_button.dart';
 
 import '../controllers/game_controller.dart';
 import '../controllers/settings_controller.dart';
@@ -19,7 +20,7 @@ class BombButton extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final btnSize =
-        context.mediaQueryShortestSide * 0.75 / SettingsController.to.boardSize;
+        context.mediaQueryShortestSide * 0.7 / SettingsController.to.boardSize;
 
     return Obx(
       () => (GameController.to.board.isGameOver ||
@@ -28,6 +29,7 @@ class BombButton extends StatelessWidget {
           ? Container(
               width: btnSize,
               height: btnSize,
+              margin: const EdgeInsets.only(top: 8),
               decoration: BoxDecoration(
                 image: DecorationImage(
                   image: GameController.to.board.isGameOver
@@ -37,10 +39,20 @@ class BombButton extends StatelessWidget {
                 ),
               ),
             )
-          : ElevatedButton(
-              onPressed: !GameController.to.board.isEnabled(rowNum, columnNum)
-                  ? null
-                  : () {
+          : !GameController.to.board.isEnabled(rowNum, columnNum)
+              ? Container(
+                  height: btnSize,
+                  width: btnSize,
+                  margin: const EdgeInsets.only(top: 8),
+                  decoration: const BoxDecoration(
+                    color: Colors.black26,
+                    shape: BoxShape.circle,
+                  ),
+                )
+              : SizedBox(
+                  width: btnSize,
+                  child: PushableButton(
+                    onPressed: () {
                       if (GameController.to.board.isGameOver ||
                           GameController.to.board.isGameClear) {
                         return;
@@ -54,13 +66,18 @@ class BombButton extends StatelessWidget {
                       //   openSnackBar();
                       // }
                     },
-              style: ElevatedButton.styleFrom(
-                fixedSize: Size(btnSize, btnSize),
-                shape: const CircleBorder(),
-                primary: SettingsController.to.buttonColor,
-              ),
-              child: const Text(''),
-            ),
+                    hslColor:
+                        HSLColor.fromColor(SettingsController.to.buttonColor),
+                    height: btnSize,
+                    shadow: BoxShadow(
+                      color: Colors.black.withOpacity(0.1),
+                      spreadRadius: 1,
+                      blurRadius: 3,
+                      offset: const Offset(0, 8),
+                    ),
+                    child: const Text(''),
+                  ),
+                ),
     );
   }
 

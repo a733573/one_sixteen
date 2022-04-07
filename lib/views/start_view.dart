@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:one_sixteen/controllers/start_controller.dart';
+import 'package:pushable_button/pushable_button.dart';
 
 import '../views/game_view.dart';
 import '../views/settings_view.dart';
@@ -28,19 +29,21 @@ class StartView extends StatelessWidget {
             fit: BoxFit.cover,
           ),
         ),
-        child: ElevatedButton(
-          onPressed: () {
-            StartController.to.playGameStartSound();
-            Get.to(() => const GameView());
-          },
-          style: ElevatedButton.styleFrom(
-            primary: Colors.yellow, //ボタンの背景色
-          ),
-          child: const Text(
-            'Game Start',
-            style: TextStyle(
-              fontSize: 50,
-              color: Colors.black,
+        child: SizedBox(
+          width: 350,
+          child: PushableButton(
+            onPressed: () {
+              StartController.to.playGameStartSound();
+              Get.to(() => const GameView());
+            },
+            hslColor: HSLColor.fromColor(Colors.yellow),
+            height: 60,
+            child: const Text(
+              'Game Start',
+              style: TextStyle(
+                fontSize: 50,
+                color: Colors.black,
+              ),
             ),
           ),
         ),
