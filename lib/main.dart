@@ -21,7 +21,7 @@ class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return GetMaterialApp(
-      title: '1/16',
+      title: 'Bomb Game',
       initialBinding: InitialBinding(),
       theme: ThemeData(
         primarySwatch: Colors.yellow,

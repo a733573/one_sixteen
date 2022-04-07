@@ -18,7 +18,8 @@ class BombButton extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final btnSize = context.width * 0.75 / SettingsController.to.boardSize;
+    final btnSize =
+        context.mediaQueryShortestSide * 0.75 / SettingsController.to.boardSize;
 
     return Obx(
       () => (GameController.to.board.isGameOver ||
